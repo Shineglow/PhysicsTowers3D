@@ -27,5 +27,8 @@ public abstract class GameMode : MonoBehaviour
     [SerializeField] protected List<TriggerZone> zones;
     [SerializeField] protected UITimer timer;
 
+    public static float CellSize { private set; get; } = 2;
+    //public static float 
+
     protected abstract void Init();
 }

@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private Spawner spawner;
     [SerializeField] private InputController inputController;
+    [SerializeField] private GameMode gameMode;
 
     [SerializeField] private float spawnerDefaultHeught;
 

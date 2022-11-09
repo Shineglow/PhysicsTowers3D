@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GameModeRace : GameMode
 {
-
+    
 
     protected override void Init()
     {

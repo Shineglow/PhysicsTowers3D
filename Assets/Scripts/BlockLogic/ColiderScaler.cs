@@ -8,8 +8,6 @@ public class ColiderScaler : MonoBehaviour
     private ScriptableBlock scriptableBlock;
     [SerializeField]
     private BoxCollider[] colliders;
-    [SerializeField]
-    private float cellSize = 2f;
 
     public void Init(ScriptableBlock sb)
     {
@@ -35,7 +33,7 @@ public class ColiderScaler : MonoBehaviour
     {
         for (int i = 0; i < collidersInfo.Length; i ++)
         {
-            colliders[i].size = collidersInfo[i].Size * cellSize - substractionSize;
+            colliders[i].size = collidersInfo[i].Size * GameMode.CellSize - substractionSize;
         }
     }
 }

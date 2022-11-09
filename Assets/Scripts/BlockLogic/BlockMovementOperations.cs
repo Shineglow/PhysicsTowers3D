@@ -11,10 +11,7 @@ public enum HorizontalMoveType
 public class BlockMovementOperations : MonoBehaviour
 {
     private Rigidbody rb;
-
     float fallSpeed, maxSpeed = -12, minSpeed = -6;
-
-    private float cellSize = 2f;
 
     private void Start()
     {
@@ -26,10 +23,10 @@ public class BlockMovementOperations : MonoBehaviour
         switch (moveType)
         {
             case HorizontalMoveType.Full:
-                rb.MovePosition(transform.position + Vector3.right * horizontalDirection * cellSize);
+                rb.MovePosition(transform.position + Vector3.right * horizontalDirection * GameMode.CellSize);
                 return;
             case HorizontalMoveType.Half:
-                rb.MovePosition(transform.position + horizontalDirection * Vector3.right * cellSize / 2);
+                rb.MovePosition(transform.position + horizontalDirection * Vector3.right * GameMode.CellSize / 2);
                 return;
         }
     }

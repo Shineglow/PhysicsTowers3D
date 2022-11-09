@@ -12,8 +12,6 @@ public class FormApplyer : MonoBehaviour
     private Rigidbody rb;
 
     public ScriptableBlock blockForm;
-    public PhysicMaterial material;
-    public float cellSize = .99f;
 
     public void ApplyForm(ScriptableBlock form)
     {
@@ -34,8 +32,8 @@ public class FormApplyer : MonoBehaviour
 
     private void ConfigSingleCollider(int index)
     {
-        colliders[index].size = blockForm.PhysicsBodys[index].Size * cellSize;
-        colliders[index].center = blockForm.PhysicsBodys[index].Position * cellSize;
+        colliders[index].size = blockForm.PhysicsBodys[index].Size * GameMode.CellSize;
+        colliders[index].center = blockForm.PhysicsBodys[index].Position * GameMode.CellSize;
     }
 
     private void SetMesh()
