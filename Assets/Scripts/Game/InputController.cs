@@ -26,22 +26,18 @@ public class InputController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             movementOperations.HorizontalMove(-1);
-            //Debug.Log("Половина движения влево");
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
             movementOperations.HorizontalMove(1);
-            //Debug.Log("Половина движения вправо");
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
             movementOperations.HorizontalMove(-1, HorizontalMoveType.Full);
-            //Debug.Log("Полное движение влево");
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
             movementOperations.HorizontalMove(1, HorizontalMoveType.Full);
-            //Debug.Log("Полное движение вправо");
         }
 
 

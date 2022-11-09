@@ -37,17 +37,22 @@ public class BlockCollisionHandler : MonoBehaviour
 
     private void SecondContact(Collision collision)
     {
-        if (joints.TryGetValue(collision.gameObject, out SpringJoint joint) && joint == null)
-                joints.Remove(collision.gameObject);
+        if (joints.TryGetValue(collision.gameObject, out SpringJoint joint))
+        {
+            if (joint != null)
+                return;
+            joints.Remove(collision.gameObject);
+        }
         joints.Add(collision.gameObject, CreateNewJoint(collision));
     }
+
     private SpringJoint CreateNewJoint(Collision otherCollision)
     {
         var joint = gameObject.AddComponent<SpringJoint>();
 
         joint.enableCollision = true;
         joint.connectedBody = otherCollision.rigidbody;
-        joint.spring = 40;
+        joint.spring = 30;
         joint.breakForce = 2;
         joint.breakTorque = 1;
 

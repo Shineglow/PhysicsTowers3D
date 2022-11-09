@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteAlways]
 public class FormApplyer : MonoBehaviour
 {
     [SerializeField]
@@ -12,6 +13,11 @@ public class FormApplyer : MonoBehaviour
     private Rigidbody rb;
 
     public ScriptableBlock blockForm;
+
+    private void OnValidate()
+    {
+        ApplyForm(blockForm);
+    }
 
     public void ApplyForm(ScriptableBlock form)
     {
