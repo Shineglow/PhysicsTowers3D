@@ -28,7 +28,7 @@ public abstract class GameMode : MonoBehaviour
     [SerializeField] protected UITimer timer;
 
     public static float CellSize { private set; get; } = 2;
-    //public static float 
+    public static float CameraHeighUnderBlocks { private set; get; } = 10;
 
     protected abstract void Init();
 }
