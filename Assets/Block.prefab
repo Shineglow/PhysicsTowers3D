@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4500196631030027502}
   - component: {fileID: 4500196631030027489}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Collider2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4500196631613268166}
   - component: {fileID: 4500196631613268185}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Collider1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 4500196631638617539}
   - component: {fileID: 4500196631638617541}
   - component: {fileID: 4500196631638617538}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 4500196631670618469}
   - component: {fileID: 307668689637701720}
   - component: {fileID: 901421636714459034}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -291,3 +291,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaler: {fileID: 4500196631670618469}
   rb: {fileID: 1614414411084830874}
+  layerChangeObjects:
+  - {fileID: 4500196631670618467}
+  - {fileID: 4500196631638617536}
+  - {fileID: 4500196631613268167}
+  - {fileID: 4500196631030027503}

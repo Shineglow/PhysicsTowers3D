@@ -1,64 +1,82 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class CalculateCameraHeightPosition : MonoBehaviour
 {
     [SerializeField]
     private Camera _camera;
-    private float targetCameraYPosition;
+    public float upperLimit, lowerLimit;
     [SerializeField]
-    private float movementDelta = 1f;
-    Coroutine cameraMove, raycaster;
+    public float delta, minDelta = 1f, maxDelta = 3f;
+    public float direction = 0;
 
-
-    private void Awake()
+    private void DynamicChangeDelta(float deltaDistance)
     {
-        targetCameraYPosition = _camera.transform.position.y;
-        raycaster = StartCoroutine(RayCaster());
-        cameraMove = StartCoroutine(MoveCamera());
+        var scaler = deltaDistance / 10;
+        if(scaler > 1)
+            scaler = 1;
+        delta = (maxDelta - minDelta) * scaler;
     }
 
-    private IEnumerator MoveCamera()
+    private void Start()
     {
-        while(true)
+        StartCoroutine(CameraVerticalMove());
+        StartCoroutine(Move());
+    }
+
+    IEnumerator CameraVerticalMove()
+    {
+        while (true)
         {
-            var deltaVector = Vector3.up * movementDelta * Time.deltaTime;
-            transform.position += deltaVector;
-            _camera.transform.position += deltaVector;
+            direction = CalculateDistanceToBlocks();
+            yield return new WaitForSeconds(.5f);
+        }
+    }
+
+    IEnumerator Move()
+    {
+        while (true)
+        {
+            if(direction != 0)
+                MoveThisWithCamera();
             yield return null;
         }
     }
 
-    private IEnumerator RayCaster()
+    private void MoveThisWithCamera()
     {
-        while (true)
+        var deltaPosition = Vector3.up * direction * delta * Time.deltaTime;
+        _camera.transform.position += deltaPosition;
+    }
+
+    private int CalculateDistanceToBlocks()
+    {
+        var minimalDistance = -1;
+        float deltaDistance = 0;
+        for(var i = -10; i <= 10; i += 2)
         {
-            for(var i = -10; i <= 10; i+=4)
+            var rayStartPosition = new Vector3(i, transform.position.y, 0);
+            var r = new Ray(rayStartPosition, Vector3.down);
+
+            if (Physics.Raycast(r, out RaycastHit hitInfo, 1000))
             {
-                var r = new Ray(new Vector3(i, transform.position.y, 0), Vector3.down);
-
-                if(Physics.Raycast(r, out RaycastHit hit, 1000f))
+                deltaDistance = lowerLimit - hitInfo.distance;
+                if (hitInfo.distance < upperLimit)
                 {
-                    if(hit.collider.gameObject.TryGetComponent(out BlockMovementOperations bmo))
-                        continue;
-                    if(hit.distance > GameMode.CameraHeighUnderBlocks+3)
-                    {
-                        targetCameraYPosition -= 3;
-                        
-                        yield return null;
-                    }
-                    if (hit.distance < GameMode.CameraHeighUnderBlocks - 3)
-                    {
-                        targetCameraYPosition += 3;
-                        yield return null;
-                    }
+                    DynamicChangeDelta(Mathf.Abs(hitInfo.distance - upperLimit));
+                    return 1;
                 }
+                if (!(hitInfo.distance > lowerLimit))
+                    minimalDistance = 0;
             }
-
-            yield return new WaitForSeconds(1);
         }
+
+        DynamicChangeDelta(Mathf.Abs(deltaDistance));
+        return minimalDistance;
     }
 }

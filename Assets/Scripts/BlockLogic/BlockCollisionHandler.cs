@@ -14,6 +14,9 @@ public class BlockCollisionHandler : MonoBehaviour
     private Rigidbody rb;
     private Dictionary<GameObject, SpringJoint> joints = new Dictionary<GameObject, SpringJoint>();
 
+    [SerializeField]
+    private GameObject[] layerChangeObjects;
+
     private void Start()
     {
         onCollisionEnterFunction = FirstContact;
@@ -32,11 +35,15 @@ public class BlockCollisionHandler : MonoBehaviour
         isBlockContact?.Invoke();
         Destroy(GetComponent<BlockMovementOperations>());
         Destroy(scaler);
+        foreach(var i in layerChangeObjects)
+            i.layer = 0;
         CreateNewJoint(otherCollision);
     }
 
     private void SecondContact(Collision collision)
     {
+        if (rb.velocity.y > 0.01)
+            return;
         if (joints.TryGetValue(collision.gameObject, out SpringJoint joint))
         {
             if (joint != null)
@@ -52,9 +59,9 @@ public class BlockCollisionHandler : MonoBehaviour
 
         joint.enableCollision = true;
         joint.connectedBody = otherCollision.rigidbody;
-        joint.spring = 30;
-        joint.breakForce = 2;
-        joint.breakTorque = 1;
+        joint.spring = 1000;
+        joint.breakForce = 15;
+        joint.breakTorque = 5;
 
         return joint;
     }

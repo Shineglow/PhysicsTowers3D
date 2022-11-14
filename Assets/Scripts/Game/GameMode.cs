@@ -20,15 +20,10 @@ public enum EndGameCondition
 
 public abstract class GameMode : MonoBehaviour
 {
-    public GameState GameState { get; private set; } = GameState.Start;
-    public EndGameCondition EndGameCondition { get; private set; } = EndGameCondition.None;
-
     [SerializeField] protected GameController gameController;
     [SerializeField] protected List<TriggerZone> zones;
     [SerializeField] protected UITimer timer;
 
     public static float CellSize { private set; get; } = 2;
-    public static float CameraHeighUnderBlocks { private set; get; } = 10;
-
-    protected abstract void Init();
+    public static float CameraHeighUnderBlocks { private set; get; } = 52;
 }
